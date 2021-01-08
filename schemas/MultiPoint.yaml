@@ -10,4 +10,4 @@ allOf:
       'coordinates':
         type: array
         items:
-          $ref: 'Position.yaml'
+          $ref: 'elements/Position.yaml'
