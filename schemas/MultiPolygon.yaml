@@ -12,4 +12,4 @@ allOf:
         items:
           type: array
           items:
-            $ref: 'LinearRing.yaml'
+            $ref: 'elements/LinearRing.yaml'
