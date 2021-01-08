@@ -13,25 +13,25 @@ description: >
 externalDocs:
   url: 'https://tools.ietf.org/html/rfc7946#section-3'
 allOf:
-  - type: object
-    properties:
-      'bbox':
-        type: array
-        items:
-          type: number
-      'type':
-        type: string  
-    required:
-      - type
-  - oneOf:
-    - $ref: 'Feature.yaml'
-    - $ref: 'FeatureCollection.yaml'
-    - $ref: 'Point.yaml'
-    - $ref: 'MultiPoint.yaml'
-    - $ref: 'LineString.yaml'
-    - $ref: 'MultiLineString.yaml'
-    - $ref: 'Polygon.yaml'
-    - $ref: 'MultiPolygon.yaml'
-    - $ref: 'GeometryCollection.yaml'
-    discriminator:
-      propertyName: type
+- type: object
+  properties:
+    'bbox':
+      type: array
+      items:
+        type: number
+    'type':
+      type: string  
+  required:
+    - type
+- oneOf:
+  - $ref: 'Feature.yaml'
+  - $ref: 'FeatureCollection.yaml'
+  - $ref: 'Point.yaml'
+  - $ref: 'MultiPoint.yaml'
+  - $ref: 'LineString.yaml'
+  - $ref: 'MultiLineString.yaml'
+  - $ref: 'Polygon.yaml'
+  - $ref: 'MultiPolygon.yaml'
+  - $ref: 'GeometryCollection.yaml'
+  discriminator:
+    propertyName: type
