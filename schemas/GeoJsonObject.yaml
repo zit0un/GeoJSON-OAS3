@@ -20,7 +20,9 @@ allOf:
         items:
           type: number
       'type':
-        type: string    
+        type: string  
+    required:
+      'type'
   - oneOf:
     - $ref: 'Feature.yaml'
     - $ref: 'FeatureCollection.yaml'
