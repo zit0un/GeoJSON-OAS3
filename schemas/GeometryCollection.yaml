@@ -1,0 +1,20 @@
+type: object
+description: >
+  GeoJSon geometry collection
+  GeometryCollections composed of a single part or a number of parts of a
+  single type SHOULD be avoided when that single part or a single object
+  of multipart type (MultiPoint, MultiLineString, or MultiPolygon) could
+  be used instead.
+externalDocs:
+  url: 'https://tools.ietf.org/html/rfc7946#section-3.1.8'
+allOf:
+  - $ref: 'Geometry.yaml'
+  - type: object
+    required:
+    - geometries
+    properties:
+      'geometries':
+        type: array
+        items:
+          $ref: 'GeometryElement.yaml'
+        minItems: 0
