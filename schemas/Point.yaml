@@ -8,4 +8,4 @@ allOf:
     - coordinates
     properties:
       'coordinates':
-        $ref: 'Position.yaml'
+        $ref: 'elements/Position.yaml'
