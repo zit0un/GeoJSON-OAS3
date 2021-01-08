@@ -3,14 +3,7 @@ description: >
   'GeometryCollection'
 externalDocs:
   url: 'https://tools.ietf.org/html/rfc7946#section-3'
-allOf:
-- type: object
-  properties:
-    'type':
-      type: string
-  required:
-  - type
-- oneOf:
+oneOf:
   - $ref: 'schemas/Point.yaml'
   - $ref: 'schemas/MultiPoint.yaml'
   - $ref: 'schemas/LineString.yaml'
