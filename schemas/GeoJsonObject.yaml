@@ -22,7 +22,7 @@ allOf:
       'type':
         type: string  
     required:
-      'type'
+      - type
   - oneOf:
     - $ref: 'Feature.yaml'
     - $ref: 'FeatureCollection.yaml'
