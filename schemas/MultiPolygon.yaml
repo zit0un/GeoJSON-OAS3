@@ -1,0 +1,15 @@
+description: GeoJSon geometry
+externalDocs:
+  url: 'https://tools.ietf.org/html/rfc7946#section-3.1.7'
+allOf:
+  - $ref: 'GeometryElement.yaml'
+  - type: object
+    required:
+    - coordinates
+    properties:
+      'coordinates':
+        type: array
+        items:
+          type: array
+          items:
+            $ref: 'LinearRing.yaml'
