@@ -3,20 +3,13 @@ description: >
   FeatureCollection
 externalDocs:
   url: 'https://tools.ietf.org/html/rfc7946#section-3'
-allOf:
-- type: object
-  properties:
-    'type':
-      type: string
-  required:
-  - type
-- oneOf:
-  - $ref: 'schemas/Point.yaml'
-  - $ref: 'schemas/MultiPoint.yaml'
-  - $ref: 'schemas/LineString.yaml'
-  - $ref: 'schemas/MultiLineString.yaml'
-  - $ref: 'schemas/Polygon.yaml'
-  - $ref: 'schemas/MultiPolygon.yaml'
-  - $ref: 'schemas/GeometryCollection.yaml'    
-  discriminator:
-    propertyName: type
+oneOf:
+- $ref: 'schemas/Point.yaml'
+- $ref: 'schemas/MultiPoint.yaml'
+- $ref: 'schemas/LineString.yaml'
+- $ref: 'schemas/MultiLineString.yaml'
+- $ref: 'schemas/Polygon.yaml'
+- $ref: 'schemas/MultiPolygon.yaml'
+- $ref: 'schemas/GeometryCollection.yaml'    
+discriminator:
+  propertyName: type
