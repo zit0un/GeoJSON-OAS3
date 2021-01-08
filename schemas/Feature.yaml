@@ -1,0 +1,21 @@
+description: GeoJSon 'Feature' object
+externalDocs:
+  url: 'https://tools.ietf.org/html/rfc7946#section-3.2'
+allOf:
+- $ref: 'GeoJsonObject.yaml'
+- type: object
+  required:
+  - geometry
+  - properties
+  properties:
+    'geometry':
+      allOf:
+      - nullable: true
+      - $ref: 'Geometry.yaml'
+    'properties':
+      type: object
+      nullable: true
+    'id':
+      oneOf:
+      - type: number
+      - type: string
