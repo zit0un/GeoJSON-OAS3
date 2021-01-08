@@ -10,4 +10,4 @@ allOf:
       'coordinates':
         type: array
         items:
-          $ref: 'LineStringCoordinates.yaml'
+          $ref: 'elements/LineStringCoordinates.yaml'
