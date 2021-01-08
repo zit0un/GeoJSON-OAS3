@@ -8,13 +8,13 @@ description: >
 externalDocs:
   url: 'https://tools.ietf.org/html/rfc7946#section-3.1.8'
 allOf:
-  - $ref: 'Geometry.yaml'
-  - type: object
-    required:
-    - geometries
-    properties:
-      'geometries':
-        type: array
-        items:
-          $ref: 'GeometryElement.yaml'
-        minItems: 0
+- $ref: 'Geometry.yaml'
+- type: object
+  required:
+  - geometries
+  properties:
+    'geometries':
+      type: array
+      items:
+        $ref: 'GeometryElement.yaml'
+      minItems: 0
