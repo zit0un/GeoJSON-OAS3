@@ -7,7 +7,7 @@ info:
     It contains the definitions for 'Feature' object and 'FeatureCollection'
     objects, as well as the definitions for all 'Geometry' objects.
     It conforms with the 'RFC-7946' standard from IETF (August 2016 version)
-    
+
     Kudos to @bubbobne and @idkw whose code helped me not start from scratch
     https://gist.github.com/bubbobne/fe5f2db65acf039be6a9fd92fc9c7233
 
@@ -21,7 +21,7 @@ info:
 
 #•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 externalDocs:
-  description: Official GeoJSON specification – 'IETF RFC-7946' (August 2016)
+  description: 'Official GeoJSON specification – IETF RFC-7946 (August 2016)'
   url: 'https://tools.ietf.org/html/rfc7946'
 
 #•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
@@ -48,11 +48,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/GeometryCollection'
         '400':
-          $ref: '#/components/responses/BadRequest400ErrorResponse'
+          $ref: '#/components/responses/Error400BadRequest'
         '401':
-          $ref: '#/components/responses/Unauthorized401ErrorResponse'
+          $ref: '#/components/responses/Error401Unauthorized'
         '500':
-          $ref: '#/components/responses/Server500ErrorResponse'
+          $ref: '#/components/responses/Error500InternalServerError'
     post:
       summary: Create new GeoJSON Geometry object
       requestBody:
@@ -65,104 +65,19 @@ paths:
         '201':
           description: New GeoJSON Geometry object created
         '400':
-          $ref: '#/components/responses/BadRequest400ErrorResponse'
+          $ref: '#/components/responses/Error400BadRequest'
         '401':
-          $ref: '#/components/responses/Unauthorized401ErrorResponse'
+          $ref: '#/components/responses/Error401Unauthorized'
         '403':
-          $ref: '#/components/responses/Forbidden403ErrorResponse'
+          $ref: '#/components/responses/Error403Forbidden'
         '500':
-          $ref: '#/components/responses/Server500ErrorResponse'
+          $ref: '#/components/responses/Error500InternalServerError'
 
 #•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 components:
 
   #=============================================================================
-  responses:
-    'BadRequest400ErrorResponse':
-      description: The JSON is not valid
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: '#/components/schemas/BasicError'
-              - type: object
-                properties:
-                  'type':
-                    type: integer
-                    enum: [400]
-
-    'Unauthorized401ErrorResponse':
-      description: The request requires the user an authentification
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: '#/components/schemas/BasicError'
-              - type: object
-                properties:
-                  'type':
-                    type: integer
-                    enum: [401]
-
-    'Forbidden403ErrorResponse':
-      description: The access is not allowed
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: '#/components/schemas/BasicError'
-              - type: object
-                properties:
-                  'type':
-                    type: integer
-                    enum: [403]
-
-    'NotFound404ErrorResponse':
-      description: The resource was not found
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: '#/components/schemas/BasicError'
-              - type: object
-                properties:
-                  'type':
-                    type: integer
-                    enum: [403]
-
-    'Server500ErrorResponse':
-      description: An unexpected error occured.
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: '#/components/schemas/BasicError'
-              - type: object
-                properties:
-                  'type':
-                    type: integer
-                    enum: [500]
-  #=============================================================================
-  securitySchemes:
-    'UserSecurity':
-      type: http
-      scheme: basic
-
-  #=============================================================================
   schemas:
-
-    #---------------------------------------------------------------------------
-    'BasicError':
-      required:
-        - code
-        - message
-      properties:
-        'code':
-          type: integer
-          minimum: 100
-          maximum: 600
-        'message':
-          type: string
 
     #---------------------------------------------------------------------------
     'GeoJsonObject':
@@ -483,4 +398,188 @@ components:
                 $ref: '#/components/schemas/GeometryElement'
               minItems: 0
 
+  #=============================================================================
+  responses:
+
+    #---------------------------------------------------------------------------
+    'Error400BadRequest':
+      description: The JSON is not valid.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'status_code':
+                type: integer
+                enum: [400]
+              'message': 
+                type: string
+                enum: ['The JSON is not valid.']
+    #---------------------------------------------------------------------------
+    'Error401Unauthorized':
+      description: The request requires an user authentication.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'status_code':
+                type: integer
+                enum: [401]
+              'message': 
+                type: string
+                enum: ['The request requires an user authentication.']
+    #---------------------------------------------------------------------------
+    'Error403Forbidden':
+      description: The access is not allowed.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'status_code':
+                type: integer
+                enum: [403]
+              'message': 
+                type: string
+                enum: ['The access is not allowed.']
+    #---------------------------------------------------------------------------
+    'Error404NotFound':
+      description: The resource was not found.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'status_code':
+                type: integer
+                enum: [404]
+              'message': 
+                type: string
+                enum: ['The resource was not found.']
+    #---------------------------------------------------------------------------
+    'Error405MethodNotAllowed':
+      description:
+        Request method is not supported for the requested resource.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'status_code':
+                type: integer
+                enum: [405]
+              'message': 
+                type: string
+                enum: ['Request method is not supported for the requested resource.']
+    #---------------------------------------------------------------------------
+    'Error406NotAcceptable':
+      description:
+        Headers sent in the request are not compatible with the service.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'status_code':
+                type: integer
+                enum: [406]
+              'message': 
+                type: string
+                enum: ['Headers sent in the request are not compatible with the service.']
+    #---------------------------------------------------------------------------
+    'Error408RequestTimeout':
+      description: >
+        The client did not produce a request within the time that the server was
+        prepared to wait. The client may repeat the request without
+        modifications at any later time.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'status_code':
+                type: integer
+                enum: [408]
+              'message': 
+                type: string
+                enum: ['The client did not produce a request within the time that the server was prepared to wait. The client may repeat the request without modifications at any later time.']
+    #---------------------------------------------------------------------------
+    'Error410Gone':
+      description: >
+        The requested resource is no longer available and will not be available
+        again. The resource should be purged from the client system.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'status_code':
+                type: integer
+                enum: [410]
+              'message': 
+                type: string
+                enum: ['The requested resource is no longer available and will not be available again. The resource should be purged from the client system.']
+    #---------------------------------------------------------------------------
+    'Error423Locked':
+      description: The resource that is being accessed is locked.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'status_code':
+                type: integer
+                enum: [423]
+              'message': 
+                type: string
+                enum: ['The resource that is being accessed is locked.']
+    #---------------------------------------------------------------------------
+    'Error429TooManyRequests':
+      description: The user has sent too many requests in a short period.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'status_code':
+                type: integer
+                enum: [429]
+              'message': 
+                type: string
+                enum: ['The user has sent too many requests in a short period.']
+    #---------------------------------------------------------------------------
+    'Error500InternalServerError':
+      description: An unexpected error occured.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'status_code':
+                type: integer
+                enum: [500]
+              'message': 
+                type: string
+                enum: ['An unexpected error occured.']
+    #---------------------------------------------------------------------------
+    'Error503ServiceUnavailable':
+      description: The server is currently unable to handle the request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              'status_code':
+                type: integer
+                enum: [503]
+              'message': 
+                type: string
+                enum: ['The server is currently unable to handle the request.']    
+  #=============================================================================
+  securitySchemes:
+    'UserSecurity':
+      type: http
+      scheme: basic
+      
 #•••••••••••••••••••••••••••••••••••[ EOF ]••••••••••••••••••••••••••••••••••••#
